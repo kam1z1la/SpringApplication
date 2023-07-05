@@ -52,9 +52,9 @@
                         <button type="submit" name="idNote" th:value="${entry.value.id}">Delete</button>
                     </div>
                 </form>
-                <form action="/note/edit" method="get">
+                <form th:action="@{/note/edit/{id}(id=${entry.value.id})}" method="get">
                     <div>
-                        <button type="submit" name="editNoteId" th:value="${entry.value.id}">Edit</button>
+                        <button type="submit" >Edit</button>
                     </div>
                 </form>
             </td>

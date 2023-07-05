@@ -6,28 +6,22 @@
 </head>
 <body>
 
-<div>
-    <p><b>Old Title:</b> <span th:text="${oldNote.title}"></span></p>
-</div>
-
-<div>
-    <p><b>Old Content:</b> <span th:text="${oldNote.content}"></span></p>
-</div>
-
-<form  method="post">
+<form method="post">
     <div>
         <pi>New Title</pi>
     </div>
 
     <div>
-        <input type="text" name="newTitle" id="newTitle">
+        <input type="text" name="newTitle" id="newTitle"
+        th:value="${oldNote.title}">
     </div>
 
     <div>
         <pi>New Content</pi>
     </div>
 
-    <textarea id="newContent" name="newContent" rows="5" cols="18">
+    <textarea id="newContent" name="newContent" rows="5" cols="18"
+    th:text="${oldNote.content}">
     </textarea>
 
     <div>

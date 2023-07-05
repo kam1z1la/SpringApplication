@@ -41,22 +41,22 @@ public class NoteController {
         return new RedirectView("/note/list");
     }
 
-    @GetMapping("/edit")
+    @GetMapping("/edit/{editNoteId}")
     public ModelAndView editNotesById(
-            @RequestParam("editNoteId") long editNoteId
+            @PathVariable("editNoteId") long editNoteId
     ) {
         ModelAndView result = new ModelAndView("notes/editNote");
         try {
             result.addObject("oldNote", noteCrudService.getById(editNoteId));
+            return result;
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
-        return result;
     }
 
-    @PostMapping("/edit")
+    @PostMapping("/edit/{editNoteId}")
     public RedirectView editNotes(
-            @RequestParam("editNoteId") long editNoteId,
+            @PathVariable("editNoteId") long editNoteId,
             @RequestParam(value = "newTitle", required = false, defaultValue = "Title") String newTitle,
             @RequestParam(value = "newContent", required = false, defaultValue = "Context") String newContent
     ) {
