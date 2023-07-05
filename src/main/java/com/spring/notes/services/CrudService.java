@@ -1,4 +1,4 @@
-package com.example.notes.services;
+package com.spring.notes.services;
 
 import java.util.Map;
 

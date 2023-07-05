@@ -1,4 +1,4 @@
-package com.example.notes.entity;
+package com.spring.notes.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

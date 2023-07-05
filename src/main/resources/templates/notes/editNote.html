@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div>
+    <p><b>Old Title:</b> <span th:text="${oldNote.title}"></span></p>
+</div>
+
+<div>
+    <p><b>Old Content:</b> <span th:text="${oldNote.content}"></span></p>
+</div>
+
+<form  method="post">
+    <div>
+        <pi>New Title</pi>
+    </div>
+
+    <div>
+        <input type="text" name="newTitle" id="newTitle">
+    </div>
+
+    <div>
+        <pi>New Content</pi>
+    </div>
+
+    <textarea id="newContent" name="newContent" rows="5" cols="18">
+    </textarea>
+
+    <div>
+        <button>Save</button>
+    </div>
+</form>
+</body>
+</html>
