@@ -12,6 +12,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @Service
 @Data
 public class NoteCrudService implements CrudService<Long, Note> {
+//    private final NoteRepository noteRepository;
     private final Note note;
     private Map<Long, Note> listNote;
 
