@@ -6,23 +6,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.data.annotation.Id;
+import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @ToString
-@Entity
-@Table(name = "note")
+/*@Entity
+@Table(name = "note")*/
+@Component
 public class Note {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title")
-    @Length(max = 200, message = "title too big!")
+//    @Column(name = "title")
+//    @Length(max = 200, message = "title too big!")
     private String title;
 
-    @Column(name = "content")
+//    @Column(name = "content")
     private String content;
 }
