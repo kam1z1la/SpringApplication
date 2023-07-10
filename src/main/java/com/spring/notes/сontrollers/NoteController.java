@@ -2,7 +2,9 @@ package com.spring.notes.сontrollers;
 
 import com.spring.notes.entity.Note;
 import com.spring.notes.services.NoteCrudService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -13,58 +15,43 @@ import org.springframework.web.servlet.view.RedirectView;
 public class NoteController {
     private final NoteCrudService noteCrudService;
 
+    @Transactional
     @PostMapping("/list")
-    public RedirectView addToList(
+    public RedirectView addToDataBase(
             @RequestParam(value = "title", required = false, defaultValue = "Title") String title,
             @RequestParam(value = "content", required = false, defaultValue = "Context") String content
     ) {
-        noteCrudService.createAndPutObject(title, content);
+        noteCrudService.add(new Note(null, title, content));
         return new RedirectView("/note/list");
     }
 
     @GetMapping("/list")
-    public ModelAndView getListNotes() {
-        ModelAndView result = new ModelAndView("notes/mainPage");
-        result.addObject("noteMap", noteCrudService.listAll());
-        return result;
+    public ModelAndView getNotes(Pageable pageable) {
+        return new ModelAndView("notes/mainPage")
+                .addObject("listNotes", noteCrudService.listAll(pageable));
     }
 
+    @Transactional
     @PostMapping("/delete")
-    public RedirectView deleteNotesById(
-            @RequestParam("idNote") long idNote
-    ) {
-        try {
-            noteCrudService.deleteById(idNote);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+    public RedirectView deleteNotesById(@RequestParam("idNote") long idNote) {
+        noteCrudService.deleteById(idNote);
         return new RedirectView("/note/list");
     }
 
     @GetMapping("/edit/{editNoteId}")
-    public ModelAndView editNotesById(
-            @PathVariable("editNoteId") long editNoteId
-    ) {
-        ModelAndView result = new ModelAndView("notes/editNote");
-        try {
-            result.addObject("oldNote", noteCrudService.getById(editNoteId));
-            return result;
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+    public ModelAndView editNotesById(@PathVariable("editNoteId") long editNoteId) {
+        return new ModelAndView("notes/editNote")
+                .addObject("oldNote", noteCrudService.getById(editNoteId));
     }
 
+    @Transactional
     @PostMapping("/edit/{editNoteId}")
     public RedirectView editNotes(
             @PathVariable("editNoteId") long editNoteId,
             @RequestParam(value = "newTitle", required = false, defaultValue = "Title") String newTitle,
             @RequestParam(value = "newContent", required = false, defaultValue = "Context") String newContent
     ) {
-        try {
-            noteCrudService.update(new Note(editNoteId, newTitle, newContent));
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        noteCrudService.update(new Note(editNoteId, newTitle, newContent));
         return new RedirectView("/note/list");
     }
 }

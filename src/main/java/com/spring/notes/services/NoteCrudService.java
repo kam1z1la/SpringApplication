@@ -1,65 +1,47 @@
 package com.spring.notes.services;
 
+
+import com.spring.notes.dto.NoteDTO;
 import com.spring.notes.entity.Note;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 @Data
-public class NoteCrudService implements CrudService<Long, Note> {
-//    private final NoteRepository noteRepository;
-    private final Note note;
-    private Map<Long, Note> listNote;
+public class NoteCrudService {
+    private final NoteRepository noteRepository;
 
-    public NoteCrudService(Note note) {
-        this.note = note;
-        listNote = new HashMap<>();
+    public List<NoteDTO> listAll(Pageable pageable) {
+        return noteRepository.findAll(pageable).stream()
+                .map(dto -> new NoteDTO(
+                        dto.getId(), dto.getTitle(), dto.getContent()
+                ))
+                .toList();
     }
 
-    @Override
-    public Map<Long, Note> listAll() {
-        return listNote;
-    }
-
-    @Override
     public Note add(Note entity) {
         Note newNote = new Note();
-        newNote.setId(ThreadLocalRandom.current().nextLong(0, 10000 * 100));
         newNote.setTitle(entity.getTitle());
         newNote.setContent(entity.getContent());
-        listNote.put(newNote.getId(), newNote);
+        noteRepository.save(newNote);
         return newNote;
     }
 
-    @Override
-    public void deleteById(Long id) throws IllegalAccessException {
-        Optional.ofNullable(listNote.remove(id)).orElseThrow(IllegalAccessException::new);
+    public void deleteById(Long id) {
+        noteRepository.deleteById(id);
     }
 
-    @Override
-    public void update(Note entity) throws IllegalAccessException {
-        listNote.keySet().stream()
-                .filter(entry -> listNote.containsKey(entity.getId()))
-                .findFirst()
-                .map(vel -> listNote.put(entity.getId(), entity))
-                .orElseThrow(IllegalAccessException::new);
+    public void update(Note entity) {
+        noteRepository.getReferenceById(entity.getId());
+        noteRepository.save(entity);
     }
 
-    @Override
-    public Note getById(Long id) throws IllegalAccessException {
-        return Optional.ofNullable(listNote.get(id)).orElseThrow(IllegalAccessException::new);
-    }
-
-    public Map<Long, Note> createAndPutObject(String setTitle, String setContent) {
-        Note note = new Note();
-        note.setTitle(setTitle);
-        note.setContent(setContent);
-        add(note);
-        return listNote;
+    public Note getById(Long id)  {
+        return noteRepository.getReferenceById(id);
     }
 }

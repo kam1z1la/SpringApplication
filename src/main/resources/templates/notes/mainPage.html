@@ -41,16 +41,16 @@
             <td>Title</td>
             <td>Content</td>
         </tr>
-        <tr th:each="entry : ${noteMap}">
-            <td th:text="${entry.value.title}"></td>
-            <td th:text="${entry.value.content}"></td>
+        <tr th:each="entry : ${listNotes}">
+            <td th:text="${entry.title}"></td>
+            <td th:text="${entry.content}"></td>
             <td>
                 <form action="/note/delete" method="post">
                     <div>
-                        <button type="submit" name="idNote" th:value="${entry.value.id}">Delete</button>
+                        <button type="submit" name="idNote" th:value="${entry.id}">Delete</button>
                     </div>
                 </form>
-                <form th:action="@{/note/edit/{id}(id=${entry.value.id})}" method="get">
+                <form th:action="@{/note/edit/{id}(id=${entry.id})}" method="get">
                     <div>
                         <button type="submit" >Edit</button>
                     </div>
