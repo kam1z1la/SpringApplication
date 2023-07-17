@@ -18,7 +18,7 @@ import java.util.List;
 @Data
 public class NoteCrudService {
     private final NoteRepository noteRepository;
-    private final PersonRepository useRepository;
+    private final PersonRepository personRepository;
     private final RoleRepository roleRepository;
 
     public Note add(Note entity) {
