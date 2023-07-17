@@ -24,4 +24,7 @@ public class Note {
 
     @Column(name = "content")
     private String content;
+
+    @ManyToOne
+    private Person person;
 }

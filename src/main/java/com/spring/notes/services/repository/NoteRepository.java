@@ -1,4 +1,4 @@
-package com.spring.notes.services;
+package com.spring.notes.services.repository;
 
 import com.spring.notes.entity.Note;
 import org.springframework.data.jpa.repository.JpaRepository;

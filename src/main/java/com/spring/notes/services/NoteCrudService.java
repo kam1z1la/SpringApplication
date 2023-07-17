@@ -3,6 +3,9 @@ package com.spring.notes.services;
 
 import com.spring.notes.dto.NoteDTO;
 import com.spring.notes.entity.Note;
+import com.spring.notes.services.repository.NoteRepository;
+import com.spring.notes.services.repository.PersonRepository;
+import com.spring.notes.services.repository.RoleRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +18,17 @@ import java.util.List;
 @Data
 public class NoteCrudService {
     private final NoteRepository noteRepository;
+    private final PersonRepository useRepository;
+    private final RoleRepository roleRepository;
+
+    public Note add(Note entity) {
+        Note newNote = new Note();
+        newNote.setTitle(entity.getTitle());
+        newNote.setContent(entity.getContent());
+        newNote.setPerson(entity.getPerson());
+        noteRepository.save(newNote);
+        return newNote;
+    }
 
     public List<NoteDTO> listAll(Pageable pageable) {
         return noteRepository.findAll(pageable).stream()
@@ -22,14 +36,6 @@ public class NoteCrudService {
                         dto.getId(), dto.getTitle(), dto.getContent()
                 ))
                 .toList();
-    }
-
-    public Note add(Note entity) {
-        Note newNote = new Note();
-        newNote.setTitle(entity.getTitle());
-        newNote.setContent(entity.getContent());
-        noteRepository.save(newNote);
-        return newNote;
     }
 
     public void deleteById(Long id) {

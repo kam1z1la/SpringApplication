@@ -2,9 +2,11 @@ package com.spring.notes.сontrollers;
 
 import com.spring.notes.entity.Note;
 import com.spring.notes.services.NoteCrudService;
+import com.spring.notes.services.repository.PersonRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -14,14 +16,18 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequiredArgsConstructor
 public class NoteController {
     private final NoteCrudService noteCrudService;
+    private final PersonRepository personRepository;
 
     @Transactional
     @PostMapping("/list")
     public RedirectView addToDataBase(
             @RequestParam(value = "title", required = false, defaultValue = "Title") String title,
-            @RequestParam(value = "content", required = false, defaultValue = "Context") String content
+            @RequestParam(value = "content", required = false, defaultValue = "Context") String content,
+            Authentication authentication
     ) {
-        noteCrudService.add(new Note(null, title, content));
+        noteCrudService.add(new Note(null, title, content,
+                personRepository.findPersonByUsername(authentication.getName())
+                        .orElseThrow()));
         return new RedirectView("/note/list");
     }
 
@@ -51,7 +57,7 @@ public class NoteController {
             @RequestParam(value = "newTitle", required = false, defaultValue = "Title") String newTitle,
             @RequestParam(value = "newContent", required = false, defaultValue = "Context") String newContent
     ) {
-        noteCrudService.update(new Note(editNoteId, newTitle, newContent));
+        noteCrudService.update(new Note(editNoteId, newTitle, newContent, null));
         return new RedirectView("/note/list");
     }
 }
