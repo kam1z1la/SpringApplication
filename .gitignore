@@ -26,7 +26,7 @@ $RECYCLE.BIN/
 
 ### Gradle ###
 # Exclude Folder List #
-#.gradle/
+.gradle/
 build/
 
 
