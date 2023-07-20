@@ -29,7 +29,4 @@ jobs:
           arguments: build
           gradle-version: 8.0.2
       - name: Run tests
-        uses: ./github-action@v2
-        with:
-         browsers: chrome, firefox
-         build-name: GitHub Actions Local Testing
+        run: ./gradlew test
