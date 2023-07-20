@@ -28,5 +28,4 @@ jobs:
         with:
           arguments: build
           gradle-version: 8.0.2
-      - name: Run tests
-        run: ./gradlew test
+
