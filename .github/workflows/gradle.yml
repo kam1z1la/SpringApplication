@@ -25,9 +25,11 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
-      - name: Run Unit Tests
-        run: ./gradlew test
         with:
           arguments: build
           gradle-version: 8.0.2
-
+      - name: Run tests
+        uses: java/github-action@v2
+        with:
+         browsers: chrome, firefox
+         build-name: GitHub Actions Local Testing
