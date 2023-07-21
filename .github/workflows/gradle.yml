@@ -17,15 +17,11 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Grant Permissions to gradlew
-        run: chmod +x gradlew
-      - name: Run tests
-        run: ./gradlew test
       - name: Build with Gradle
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
-            arguments: build
-            gradle-version: 8.0.2
+             arguments: build
+             gradle-version: 8.0.2
       - name: Grant Permissions to gradlew
         run: chmod +x gradlew
       - name: Run tests
