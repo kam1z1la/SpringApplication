@@ -19,12 +19,13 @@ jobs:
           distribution: 'temurin'
       - name: Grant Permissions to gradlew
         run: chmod +x gradlew
-      - name: Run tests
-        run: gradle test
+#      - name: Run tests
+
       - name: Build with Gradle
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
             arguments: build
             gradle-version: '8.0.2'
+            run: ./gradlew test
 
 
