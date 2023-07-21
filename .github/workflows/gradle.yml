@@ -1,6 +1,8 @@
 name: Java CI with Gradle
 
-on: [push, pull_request]
+on:
+  pull_request:
+    branches: [ "master", "branch" ]
 
 permissions:
   contents: read
@@ -21,3 +23,4 @@ jobs:
         run: chmod +x gradlew
       - name: Run tests
         run: ./gradlew test
+
