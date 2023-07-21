@@ -1,6 +1,10 @@
 name: Java CI with Gradle
 
-on: [ pull_request, push ]
+on:
+  push:
+    branches: [ "master", "branch" ]
+  pull_request:
+    branches: [ "master", "branch" ]
 
 permissions:
   contents: read
