@@ -17,10 +17,10 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Clean
-        run: gradlew clean
       - name: Grant Permissions to gradlew
         run: chmod +x gradlew
+        with:
+          gradle-version: 8.0.2
       - name: Run tests
         run: ./gradlew test
       - name: Build with Gradle
