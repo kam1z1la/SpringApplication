@@ -21,10 +21,9 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+          cache: gradle
       - name: Grant Permissions to gradlew
         run: chmod +x gradlew
-        with:
-          gradle-version: 8.0.2
       - name: Run tests
         run: ./gradlew test
       - name: Build with Gradle
